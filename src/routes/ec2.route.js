@@ -9,6 +9,7 @@ import {
   listImages,
   listAvailabilityRegions,
   listAvailabilityZones,
+  getCondorStatus,
 } from "../controller/ec2.controller.js";
 
 const router = Router();
@@ -16,6 +17,7 @@ router.get("/instances", listInstances);
 router.get("/images", listImages);
 router.get("/availability-regions", listAvailabilityRegions);
 router.get("/availability-zones", listAvailabilityZones);
+router.get("/htcondor/status", getCondorStatus);
 
 router.post("/instances", createInstances);
 router.put("/instances/start", startInstances);
