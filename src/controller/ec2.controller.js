@@ -3,7 +3,7 @@ import { ec2Service } from "../service/index.js";
 // POST /instances
 export const createInstances = async (req, res) => {
   try {
-    const { imageId, maxCount, baseName } = req.body;
+    const { imageId, maxCount, baseName, keyName, securityGroupIds } = req.body;
 
     // 요청 데이터 검증
     if (!imageId || !baseName || typeof maxCount !== "number") {
@@ -13,13 +13,37 @@ export const createInstances = async (req, res) => {
       });
     }
 
+    if (!keyName) {
+      return res.status(400).json({
+        status: "error",
+        message: "keyName is required",
+      });
+    }
+
+    // 보안 그룹이 없으면 기본 보안 그룹 사용
+    let finalSecurityGroupIds = securityGroupIds;
+    if (!Array.isArray(securityGroupIds) || securityGroupIds.length === 0) {
+      // 보안 그룹 ID가 없으면 기본 보안 그룹 ID를 찾아서 설정
+      const defaultSecurityGroup = await ec2Service.getDefaultSecurityGroup();
+      if (!defaultSecurityGroup) {
+        return res.status(400).json({
+          status: "error",
+          message: "No default security group found",
+        });
+      }
+      finalSecurityGroupIds = [defaultSecurityGroup];
+    }
+
     // 서비스 호출
     const result = await ec2Service.createInstances({
       imageId,
       maxCount,
       baseName,
+      keyName,
+      securityGroupIds: finalSecurityGroupIds,
     });
 
+    // 성공 응답 반환
     return res.status(201).json(result);
   } catch (error) {
     console.error("Error in createInstances:", error);

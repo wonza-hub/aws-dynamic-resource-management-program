@@ -3,6 +3,8 @@
  * @param {string} imageId - 생성할 인스턴스에 사용할 이미지 ID
  * @param {number} maxCount - 생성할 인스턴스 수
  * @param {string} baseName - 인스턴스 이름의 기본 값
+ * @param {string} keyName - 사용할 키페어 이름
+ * @param {string[]} securityGroupIds - 적용할 보안 그룹 ID 목록
  * @returns {Object} - 생성된 인스턴스 및 요청 정보
  */
 import { getEC2Client } from "../aws-client.js";
@@ -13,7 +15,13 @@ import {
 } from "@aws-sdk/client-ec2";
 import { v4 as uuidv4 } from "uuid";
 
-const createInstances = async ({ imageId, maxCount, baseName }) => {
+const createInstances = async ({
+  imageId,
+  maxCount,
+  baseName,
+  keyName,
+  securityGroupIds,
+}) => {
   const client = getEC2Client();
 
   const describeSubnetsCommand = new DescribeSubnetsCommand({});
@@ -33,7 +41,9 @@ const createInstances = async ({ imageId, maxCount, baseName }) => {
       MinCount: 1,
       ImageId: imageId,
       InstanceType: "t2.micro",
+      KeyName: keyName, // 키페어 설정
       SubnetId: subnetId,
+      SecurityGroupIds: securityGroupIds, // 보안 그룹 설정
     };
 
     const command = new RunInstancesCommand(input);
@@ -44,7 +54,7 @@ const createInstances = async ({ imageId, maxCount, baseName }) => {
     // 생성된 인스턴스 정보 가공
     const createdInstances = Instances.map((instance) => {
       const uniqueId = uuidv4().split("-")[0]; // 고유 ID 생성
-      const name = `${baseName}_${uniqueId}`;
+      const name = `${baseName}-${uniqueId}`;
       return {
         InstanceId: instance.InstanceId,
         Name: name,
