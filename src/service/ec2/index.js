@@ -1,5 +1,6 @@
 // 여러 개의 서비스 함수들을 ec2Service 객체로 통합
 import createInstances from "./create-instances.service.js";
+import getCondorStatus from "./get-condor-status.service.js";
 import listAvailabilityRegions from "./list-availability-regions.service.js";
 import listAvailabilityZones from "./list-availability-zones.service.js";
 import listImages from "./list-images.service.js";
@@ -17,6 +18,7 @@ const ec2Service = {
   rebootInstances,
   startInstances,
   stopInstances,
+  getCondorStatus,
 };
 
 export default ec2Service;
