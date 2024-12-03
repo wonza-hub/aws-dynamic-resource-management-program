@@ -1,0 +1,90 @@
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.instance-actions-form {
+  width: 100vw;
+  height: fit-content;
+}
+
+/* Card Container */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem; /* 공간 간격 */
+  padding: 1.5rem; /* 패딩 */
+}
+
+/* Individual Card */
+.card {
+  background-color: #ffffff; /* 배경 색상 */
+  border-radius: 0.75rem; /* 둥근 모서리 */
+  border: 1px solid #e0e0e0; /* 경계선 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 그림자 */
+  width: calc(33.333% - 1rem); /* 화면 크기에 따라 너비 조정 */
+  overflow: hidden; /* 카드 내용이 넘치지 않도록 */
+  transition: transform 0.3s ease-in-out; /* hover 시 애니메이션 효과 */
+}
+
+/* Card Hover Effect */
+.card:hover {
+  transform: translateY(-5px); /* 카드 이동 효과 */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* hover 시 그림자 강도 증가 */
+}
+
+/* Card Content */
+.card-content {
+  padding: 1.25rem; /* 카드 안쪽 여백 */
+}
+
+/* Card Title */
+.card-title {
+  font-size: 1.125rem; /* 제목 크기 */
+  font-weight: 600; /* 제목 두께 */
+  color: #333333; /* 텍스트 색상 */
+  margin-bottom: 0.75rem; /* 제목과 내용 간 여백 */
+}
+
+/* Card Description */
+.card-description {
+  font-size: 0.875rem; /* 설명 글씨 크기 */
+  color: #666666; /* 설명 글씨 색상 */
+  margin-bottom: 0.5rem; /* 내용 간 여백 */
+}
+
+/* Status Badge */
+.status-badge {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px; /* 원형 배지 */
+}
+
+/* Running Status */
+.status-running {
+  background-color: #d1fae5;
+  color: #16a34a;
+}
+
+/* Stopped Status */
+.status-stopped {
+  background-color: #fee2e2;
+  color: #f87171;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .card {
+    width: calc(50% - 1rem); /* 화면 크기가 중간 크기일 때 50% */
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    width: 100%; /* 화면 크기가 작을 때 100% */
+  }
+}
