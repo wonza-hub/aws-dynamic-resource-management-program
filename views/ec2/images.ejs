@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AMI | EC2</title>
+    <link rel="stylesheet" href="/css/images.css" />
+  </head>
+  <body>
+    <h1>EC2 Images</h1>
+
+    <div class="card-container">
+      <% images.forEach(image => { %>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><%= image.Name %></h3>
+          <span
+            class="status-badge <%= image.State === 'available' ? 'status-available' : 'status-unavailable' %>"
+          >
+            <%= image.State %>
+          </span>
+        </div>
+        <div class="card-body">
+          <p><strong>Image ID:</strong> <%= image.ImageId %></p>
+          <p><strong>Architecture:</strong> <%= image.Architecture %></p>
+          <p>
+            <strong>Creation Date:</strong> <%= new
+            Date(image.CreationDate).toLocaleString() %>
+          </p>
+          <p><strong>Description:</strong> <%= image.Description %></p>
+          <p><strong>Root Device Type:</strong> <%= image.RootDeviceType %></p>
+          <p>
+            <strong>Virtualization Type:</strong> <%= image.VirtualizationType
+            %>
+          </p>
+          <p><strong>Owner ID:</strong> <%= image.OwnerId %></p>
+          <p>
+            <strong>Source Instance ID:</strong> <%= image.SourceInstanceId %>
+          </p>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </body>
+</html>
