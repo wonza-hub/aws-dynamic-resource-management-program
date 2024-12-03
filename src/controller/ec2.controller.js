@@ -144,7 +144,7 @@ export const listImages = async (req, res) => {
   try {
     const existingImages = await ec2Service.listImages();
 
-    return res.status(200).json(existingImages);
+    return res.render("ec2/images", { images: existingImages });
   } catch (error) {
     return res.status(500).json({
       status: "error",
