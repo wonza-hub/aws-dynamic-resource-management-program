@@ -3,19 +3,17 @@
  * @param {Array<string>} instanceIds - 재부팅할 인스턴스 ID 배열
  * @returns {Object} - 요청 ID와 상태 메시지
  */
-import { getEC2Client } from "../aws-client.js";
 import { RebootInstancesCommand } from "@aws-sdk/client-ec2";
+import ec2Client from "../aws-client.js";
 
 const rebootInstances = async (instanceIds) => {
-  const client = getEC2Client();
-
   const input = {
     InstanceIds: instanceIds,
   };
   const command = new RebootInstancesCommand(input);
 
   try {
-    const { $metadata } = await client.send(command);
+    const { $metadata } = await ec2Client.send(command);
 
     // 응답 데이터 가공
     return {

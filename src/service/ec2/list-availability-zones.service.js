@@ -2,16 +2,14 @@
  * SERVICE: 가용 영역을 조회하는 함수
  * @returns {Array} 가용 영역 정보를 담은 배열
  */
-import { getEC2Client } from "../aws-client.js";
 import { DescribeAvailabilityZonesCommand } from "@aws-sdk/client-ec2";
+import ec2Client from "../aws-client.js";
 
 const listAvailabilityZones = async () => {
-  const client = getEC2Client();
-
   const command = new DescribeAvailabilityZonesCommand();
 
   try {
-    const { AvailabilityZones } = await client.send(command);
+    const { AvailabilityZones } = await ec2Client.send(command);
 
     const zones = AvailabilityZones.map((zone) => ({
       ZoneName: zone.ZoneName || "N/A", // 가용 영역 이름

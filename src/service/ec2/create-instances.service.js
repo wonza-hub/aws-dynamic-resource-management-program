@@ -7,13 +7,13 @@
  * @param {string[]} securityGroupIds - 적용할 보안 그룹 ID 목록
  * @returns {Object} - 생성된 인스턴스 및 요청 정보
  */
-import { getEC2Client } from "../aws-client.js";
 import {
   RunInstancesCommand,
   DescribeSubnetsCommand,
   CreateTagsCommand,
 } from "@aws-sdk/client-ec2";
 import { v4 as uuidv4 } from "uuid";
+import ec2Client from "../aws-client.js";
 
 const createInstances = async ({
   imageId,
@@ -22,13 +22,11 @@ const createInstances = async ({
   keyName,
   securityGroupIds,
 }) => {
-  const client = getEC2Client();
-
   const describeSubnetsCommand = new DescribeSubnetsCommand({});
 
   try {
     // 서브넷 ID 조회
-    const subnetsData = await client.send(describeSubnetsCommand);
+    const subnetsData = await ec2Client.send(describeSubnetsCommand);
     const subnetId = subnetsData.Subnets[0]?.SubnetId;
 
     if (!subnetId) {
@@ -49,7 +47,7 @@ const createInstances = async ({
     const command = new RunInstancesCommand(input);
 
     // 인스턴스 생성 명령 실행
-    const { $metadata, Instances } = await client.send(command);
+    const { $metadata, Instances } = await ec2Client.send(command);
 
     // 생성된 인스턴스 정보 가공
     const createdInstances = Instances.map((instance) => {
@@ -80,7 +78,7 @@ const createInstances = async ({
         ],
       });
 
-      await client.send(tagCommand); // 태그 추가 요청
+      await ec2Client.send(tagCommand); // 태그 추가 요청
     }
 
     return {

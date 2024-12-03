@@ -2,15 +2,13 @@
  * SERVICE: 인스턴스 목록을 조회하는 함수
  * @returns {Array} instances - 배열 형태의 인스턴스 정보
  */
-import { getEC2Client } from "../aws-client.js";
 import { DescribeInstancesCommand } from "@aws-sdk/client-ec2";
+import ec2Client from "../aws-client.js";
 
 const listInstances = async () => {
-  const client = getEC2Client();
-
   const command = new DescribeInstancesCommand({});
   try {
-    const { Reservations } = await client.send(command);
+    const { Reservations } = await ec2Client.send(command);
 
     // 인스턴스 정보를 담을 배열
     const instances = [];

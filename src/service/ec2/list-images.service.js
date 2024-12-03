@@ -2,16 +2,14 @@
  * SERVICE: 이미지 목록을 조회하는 함수
  * @returns {Array} 이미지 정보를 담은 배열
  */
-import { getEC2Client } from "../aws-client.js";
 import { DescribeImagesCommand } from "@aws-sdk/client-ec2";
+import ec2Client from "../aws-client.js";
 
 const listImages = async () => {
-  const client = getEC2Client();
-
   const command = new DescribeImagesCommand({ Owners: ["self"] });
 
   try {
-    const { Images } = await client.send(command);
+    const { Images } = await ec2Client.send(command);
 
     const imageList = Images.map((image) => ({
       ImageId: image.ImageId || "N/A", // 이미지 ID
