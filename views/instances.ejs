@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EC2</title>
+    <link rel="stylesheet" href="/css/ec2.css" />
+  </head>
+  <body>
+    <main class="card-container">
+      <% instances.forEach(instance => { %>
+      <div class="card">
+        <div class="card-content">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title"><%= instance.Name %></h3>
+              <p class="card-description"><%= instance.InstanceId %></p>
+            </div>
+            <span
+              class="status-badge <%= instance.State === 'running' ? 'status-running' : 'status-stopped' %>"
+            >
+              <%= instance.State %>
+            </span>
+          </div>
+
+          <div class="card-body">
+            <div class="card-item">
+              <div class="card-item-icon">
+                <img src="/icons/server-icon.svg" class="icon" alt="Server" />
+              </div>
+              <div class="card-item-info">
+                <p class="label">Instance Type</p>
+                <p><%= instance.InstanceType %></p>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-item-icon">
+                <img
+                  src="/icons/harddrive-icon.svg"
+                  class="icon"
+                  alt="Hard Drive"
+                />
+              </div>
+              <div class="card-item-info">
+                <p class="label">Status Check</p>
+                <p><%= instance.StatusCheck %></p>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-item-icon">
+                <img src="/icons/monitor-icon.svg" class="icon" alt="Monitor" />
+              </div>
+              <div class="card-item-info">
+                <p class="label">Availability Zone</p>
+                <p><%= instance.AvailabilityZone %></p>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-item-icon">
+                <img src="/icons/wifi-icon.svg" class="icon" alt="Wifi" />
+              </div>
+              <div class="card-item-info">
+                <p class="label">Public DNS</p>
+                <p><%= instance.PublicIPv4DNS || 'N/A' %></p>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-item-icon">
+                <img
+                  src="/icons/activity-icon.svg"
+                  class="icon"
+                  alt="Activity"
+                />
+              </div>
+              <div class="card-item-info">
+                <p class="label">Monitoring</p>
+                <p><%= instance.Monitoring || 'Not Available' %></p>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-item-icon">
+                <img src="/icons/shield-icon.svg" class="icon" alt="Shield" />
+              </div>
+              <div class="card-item-info">
+                <p class="label">Security Group</p>
+                <p><%= instance.SecurityGroupName %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </main>
+  </body>
+</html>
