@@ -158,7 +158,7 @@ export const listAvailabilityRegions = async (req, res) => {
   try {
     const availabilityRegions = await ec2Service.listAvailabilityRegions();
 
-    return res.status(200).json(availabilityRegions);
+    return res.render("ec2/availability-regions", { availabilityRegions });
   } catch (error) {
     return res.status(500).json({
       status: "error",
