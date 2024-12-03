@@ -4,47 +4,17 @@ import { ec2Service } from "../service/index.js";
 export const createInstances = async (req, res) => {
   try {
     const { imageId, maxCount, baseName, keyName, securityGroupIds } = req.body;
+    const sgIds = [securityGroupIds];
 
-    // 요청 데이터 검증
-    if (!imageId || !baseName || typeof maxCount !== "number") {
-      return res.status(400).json({
-        status: "error",
-        message: "imageId, baseName, and maxCount are required fields",
-      });
-    }
-
-    if (!keyName) {
-      return res.status(400).json({
-        status: "error",
-        message: "keyName is required",
-      });
-    }
-
-    // 보안 그룹이 없으면 기본 보안 그룹 사용
-    let finalSecurityGroupIds = securityGroupIds;
-    if (!Array.isArray(securityGroupIds) || securityGroupIds.length === 0) {
-      // 보안 그룹 ID가 없으면 기본 보안 그룹 ID를 찾아서 설정
-      const defaultSecurityGroup = await ec2Service.getDefaultSecurityGroup();
-      if (!defaultSecurityGroup) {
-        return res.status(400).json({
-          status: "error",
-          message: "No default security group found",
-        });
-      }
-      finalSecurityGroupIds = [defaultSecurityGroup];
-    }
-
-    // 서비스 호출
-    const result = await ec2Service.createInstances({
+    await ec2Service.createInstances({
       imageId,
       maxCount,
       baseName,
       keyName,
-      securityGroupIds: finalSecurityGroupIds,
+      securityGroupIds: sgIds,
     });
 
-    // 성공 응답 반환
-    return res.status(201).json(result);
+    return res.redirect("/ec2/instances");
   } catch (error) {
     console.error("Error in createInstances:", error);
     return res.status(500).json({
@@ -54,12 +24,17 @@ export const createInstances = async (req, res) => {
   }
 };
 
+// GET /instances/create
+export const renderInstancesCreation = async (req, res) => {
+  return res.render("ec2/instances-creation");
+};
+
 // GET /instances
 export const listInstances = async (req, res) => {
   try {
     const existingInstances = await ec2Service.listInstances();
 
-    return res.status(200).json(existingInstances);
+    return res.render("ec2/instances", { instances: existingInstances });
   } catch (error) {
     return res.status(500).json({
       status: "error",
