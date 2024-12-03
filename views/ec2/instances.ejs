@@ -3,98 +3,171 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EC2</title>
+    <title>인스턴스 | EC2</title>
     <link rel="stylesheet" href="/css/ec2.css" />
   </head>
   <body>
     <main class="card-container">
-      <% instances.forEach(instance => { %>
-      <div class="card">
-        <div class="card-content">
-          <div class="card-header">
-            <div>
-              <h3 class="card-title"><%= instance.Name %></h3>
-              <p class="card-description"><%= instance.InstanceId %></p>
-            </div>
-            <span
-              class="status-badge <%= instance.State === 'running' ? 'status-running' : 'status-stopped' %>"
-            >
-              <%= instance.State %>
-            </span>
-          </div>
+      <form class="instance-actions-form" id="instance-actions-form">
+        <div>
+          <label for="action">인스턴스 상태</label>
+          <select id="action" name="action">
+            <option value="start">시작</option>
+            <option value="stop">중지</option>
+            <option value="reboot">재부팅</option>
+          </select>
+          <button type="submit">상태 적용</button>
+        </div>
 
-          <div class="card-body">
-            <div class="card-item">
-              <div class="card-item-icon">
-                <img src="/icons/server-icon.svg" class="icon" alt="Server" />
+        <% instances.forEach(instance => { %>
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title"><%= instance.Name %></h3>
+                <p class="card-description"><%= instance.InstanceId %></p>
               </div>
-              <div class="card-item-info">
-                <p class="label">Instance Type</p>
-                <p><%= instance.InstanceType %></p>
-              </div>
+              <span
+                class="status-badge <%= instance.State === 'running' ? 'status-running' : 'status-stopped' %>"
+              >
+                <%= instance.State %>
+              </span>
             </div>
 
-            <div class="card-item">
-              <div class="card-item-icon">
-                <img
-                  src="/icons/harddrive-icon.svg"
-                  class="icon"
-                  alt="Hard Drive"
+            <div class="card-body">
+              <!-- 인스턴스 선택 -->
+              <div>
+                <input
+                  type="checkbox"
+                  class="instance-checkbox"
+                  name="instanceIds"
+                  value="<%= instance.InstanceId %>"
                 />
+                <label for="<%= instance.InstanceId %>"
+                  ><%= instance.Name %></label
+                >
               </div>
-              <div class="card-item-info">
-                <p class="label">Status Check</p>
-                <p><%= instance.StatusCheck %></p>
+              <!-- 인스턴스 정보 표시 -->
+              <div class="card-item">
+                <div class="card-item-icon">
+                  <img src="/icons/server-icon.svg" class="icon" alt="Server" />
+                </div>
+                <div class="card-item-info">
+                  <p class="label">Instance Type</p>
+                  <p><%= instance.InstanceType %></p>
+                </div>
               </div>
-            </div>
 
-            <div class="card-item">
-              <div class="card-item-icon">
-                <img src="/icons/monitor-icon.svg" class="icon" alt="Monitor" />
+              <div class="card-item">
+                <div class="card-item-icon">
+                  <img
+                    src="/icons/harddrive-icon.svg"
+                    class="icon"
+                    alt="Hard Drive"
+                  />
+                </div>
+                <div class="card-item-info">
+                  <p class="label">Status Check</p>
+                  <p><%= instance.StatusCheck %></p>
+                </div>
               </div>
-              <div class="card-item-info">
-                <p class="label">Availability Zone</p>
-                <p><%= instance.AvailabilityZone %></p>
-              </div>
-            </div>
 
-            <div class="card-item">
-              <div class="card-item-icon">
-                <img src="/icons/wifi-icon.svg" class="icon" alt="Wifi" />
+              <div class="card-item">
+                <div class="card-item-icon">
+                  <img
+                    src="/icons/monitor-icon.svg"
+                    class="icon"
+                    alt="Monitor"
+                  />
+                </div>
+                <div class="card-item-info">
+                  <p class="label">Availability Zone</p>
+                  <p><%= instance.AvailabilityZone %></p>
+                </div>
               </div>
-              <div class="card-item-info">
-                <p class="label">Public DNS</p>
-                <p><%= instance.PublicIPv4DNS || 'N/A' %></p>
-              </div>
-            </div>
 
-            <div class="card-item">
-              <div class="card-item-icon">
-                <img
-                  src="/icons/activity-icon.svg"
-                  class="icon"
-                  alt="Activity"
-                />
+              <div class="card-item">
+                <div class="card-item-icon">
+                  <img src="/icons/wifi-icon.svg" class="icon" alt="Wifi" />
+                </div>
+                <div class="card-item-info">
+                  <p class="label">Public DNS</p>
+                  <p><%= instance.PublicIPv4DNS || 'N/A' %></p>
+                </div>
               </div>
-              <div class="card-item-info">
-                <p class="label">Monitoring</p>
-                <p><%= instance.Monitoring || 'Not Available' %></p>
-              </div>
-            </div>
 
-            <div class="card-item">
-              <div class="card-item-icon">
-                <img src="/icons/shield-icon.svg" class="icon" alt="Shield" />
+              <div class="card-item">
+                <div class="card-item-icon">
+                  <img
+                    src="/icons/activity-icon.svg"
+                    class="icon"
+                    alt="Activity"
+                  />
+                </div>
+                <div class="card-item-info">
+                  <p class="label">Monitoring</p>
+                  <p><%= instance.Monitoring || 'Not Available' %></p>
+                </div>
               </div>
-              <div class="card-item-info">
-                <p class="label">Security Group</p>
-                <p><%= instance.SecurityGroupName %></p>
+
+              <div class="card-item">
+                <div class="card-item-icon">
+                  <img src="/icons/shield-icon.svg" class="icon" alt="Shield" />
+                </div>
+                <div class="card-item-info">
+                  <p class="label">Security Group</p>
+                  <p><%= instance.SecurityGroupName %></p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <% }); %>
+        <% }); %>
+      </form>
     </main>
+
+    <script>
+      document
+        .getElementById("instance-actions-form")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const selectedAction = document.getElementById("action").value;
+          const selectedInstances = Array.from(
+            document.querySelectorAll(".instance-checkbox:checked")
+          ).map((checkbox) => checkbox.value);
+
+          if (selectedInstances.length === 0) {
+            alert("Please select at least one instance.");
+            return;
+          }
+
+          try {
+            const response = await fetch("/ec2/instances/action", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                action: selectedAction,
+                instanceIds: selectedInstances,
+              }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              alert("일부 인스턴스의 상태 변경이 성공적으로 수행되었습니다.");
+              location.reload();
+            } else {
+              alert(`Error: ${result.message}`);
+            }
+          } catch (error) {
+            alert(
+              "작업 수행 중 알 수 없는 에러가 발생했습니다. 다시 시도해주세요."
+            );
+          }
+        });
+    </script>
   </body>
 </html>

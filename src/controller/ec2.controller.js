@@ -29,6 +29,30 @@ export const renderInstancesCreation = async (req, res) => {
   return res.render("ec2/instances-creation");
 };
 
+// PUT /instances/action
+export const handleInstanceAction = async (req, res) => {
+  try {
+    const { action, instanceIds } = req.body;
+
+    if (!action || !Array.isArray(instanceIds) || instanceIds.length === 0) {
+      return res.status(400).json({
+        status: "error",
+        message: "Invalid request. Action and instanceIds are required.",
+      });
+    }
+
+    const result = await await ec2Service.controlInstances(action, instanceIds);
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in handleInstanceAction:", error);
+    return res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
 // GET /instances
 export const listInstances = async (req, res) => {
   try {
