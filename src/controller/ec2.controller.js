@@ -41,7 +41,7 @@ export const handleInstanceAction = async (req, res) => {
       });
     }
 
-    const result = await await ec2Service.controlInstances(action, instanceIds);
+    const result = await ec2Service.controlInstances(action, instanceIds);
 
     return res.status(200).json(result);
   } catch (error) {
