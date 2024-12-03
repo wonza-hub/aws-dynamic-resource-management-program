@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>인스턴스 생성</title>
+    <!-- <link rel="stylesheet" href="/css/ec2.css" /> -->
+  </head>
+  <body>
+    <div class="container">
+      <h1>인스턴스 생성</h1>
+      <form action="/ec2/instances" method="POST">
+        <!-- imageId -->
+        <div class="form-group">
+          <label for="imageId">AMI</label>
+          <select id="imageId" name="imageId" required>
+            <!-- @@@환경변수로 분리@@@ -->
+            <option value="ami-015877ae41e23e71e">
+              사용자 지정 HTCondor Control 이미지 AMI
+            </option>
+          </select>
+        </div>
+
+        <!-- maxCount -->
+        <div class="form-group">
+          <label for="maxCount">갯수</label>
+          <input
+            type="number"
+            id="maxCount"
+            name="maxCount"
+            value="1"
+            min="1"
+            max="10"
+          />
+        </div>
+
+        <!-- baseName -->
+        <div class="form-group">
+          <label for="baseName">인스턴스명 접두어</label>
+          <input type="text" id="baseName" name="baseName" value="ec2" />
+        </div>
+
+        <!-- keyName -->
+        <div class="form-group">
+          <label for="keyName">키페어</label>
+          <select id="keyName" name="keyName" required>
+            <!-- @@@환경변수로 분리@@@ -->
+            <option value="AWS-HTCondor-key_pair">
+              사용자 지정 HTCondor 키페어
+            </option>
+          </select>
+        </div>
+
+        <!-- securityGroupIds -->
+        <div class="form-group">
+          <label for="securityGroupIds">보안 그룹</label>
+          <select id="securityGroupIds" name="securityGroupIds" required>
+            <option value="default">기본 보안 그룹</option>
+            <!-- @@@환경변수로 분리@@@ -->
+            <option value="sg-003cdf24e731ed907">
+              사용자 지정 HTCondor 클러스터 보안 그룹
+            </option>
+          </select>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button type="submit" class="submit-btn">인스턴스 생성</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
