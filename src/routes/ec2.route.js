@@ -11,6 +11,7 @@ import {
   listAvailabilityZones,
   getCondorStatus,
   renderInstancesCreation,
+  handleInstanceAction,
 } from "../controller/ec2.controller.js";
 
 const router = Router();
@@ -22,6 +23,8 @@ router.get("/htcondor/status", getCondorStatus);
 
 // 렌더링
 router.get("/instances/create", renderInstancesCreation);
+
+router.put("/instances/action", handleInstanceAction);
 
 router.post("/instances", createInstances);
 router.put("/instances/start", startInstances);
