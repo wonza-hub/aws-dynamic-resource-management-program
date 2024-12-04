@@ -172,7 +172,7 @@ export const listAvailabilityZones = async (req, res) => {
   try {
     const availabilityZones = await ec2Service.listAvailabilityZones();
 
-    return res.status(200).json(availabilityZones);
+    return res.render("ec2/availability-zones", { availabilityZones });
   } catch (error) {
     return res.status(500).json({
       status: "error",
@@ -223,12 +223,8 @@ export const getCondorStatus = async (req, res) => {
         draining: columns[7],
       };
     });
-    const result = {
-      clusterNodes,
-      clusterSummary,
-    };
 
-    return res.status(200).json(result);
+    return res.render("ec2/htcondor", { clusterNodes, clusterSummary });
   } catch (error) {
     return res.status(500).json({
       status: "error",
