@@ -9,22 +9,31 @@
   <body>
     <%- include('../base.ejs') %>
     <h2>인스턴스 목록</h2>
-    <main class="card-container">
-      <form class="instance-actions-form" id="instance-actions-form">
-        <div>
-          <label for="action">인스턴스 상태</label>
-          <select id="action" name="action">
-            <option value="start">시작</option>
-            <option value="stop">중지</option>
-            <option value="reboot">재부팅</option>
-          </select>
-          <button type="submit">상태 적용</button>
-        </div>
-
+    <form class="instance-actions-form" id="instance-actions-form">
+      <div>
+        <label for="action">인스턴스 상태</label>
+        <select id="action" name="action">
+          <option value="start">시작</option>
+          <option value="stop">중지</option>
+          <option value="reboot">재부팅</option>
+        </select>
+        <button type="submit">상태 적용</button>
+        <button type="button" onclick="location.href='/ec2/instances/create'">
+          새 인스턴스 생성
+        </button>
+      </div>
+      <main class="card-container">
         <% instances.forEach(instance => { %>
         <div class="card">
           <div class="card-content">
             <div class="card-header">
+              <!-- 인스턴스 선택 -->
+              <input
+                type="checkbox"
+                class="instance-checkbox"
+                name="instanceIds"
+                value="<%= instance.InstanceId %>"
+              />
               <div>
                 <h3 class="card-title"><%= instance.Name %></h3>
                 <p class="card-description"><%= instance.InstanceId %></p>
@@ -37,18 +46,6 @@
             </div>
 
             <div class="card-body">
-              <!-- 인스턴스 선택 -->
-              <div>
-                <input
-                  type="checkbox"
-                  class="instance-checkbox"
-                  name="instanceIds"
-                  value="<%= instance.InstanceId %>"
-                />
-                <label for="<%= instance.InstanceId %>"
-                  ><%= instance.Name %></label
-                >
-              </div>
               <!-- 인스턴스 정보 표시 -->
               <div class="card-item">
                 <div class="card-item-icon"></div>
@@ -101,8 +98,8 @@
           </div>
         </div>
         <% }); %>
-      </form>
-    </main>
+      </main>
+    </form>
 
     <script>
       document

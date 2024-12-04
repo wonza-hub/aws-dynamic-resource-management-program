@@ -10,7 +10,7 @@ body {
 .navbar {
   background-color: #333;
   color: #fff;
-  padding: 10px 20px;
+  padding: 1.2rem 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -117,11 +117,6 @@ body {
   .navbar-links a {
     font-size: 20px;
   }
-}
-
-/* 페이지 내용 스타일 */
-main {
-  padding: 20px;
 }
 
 .content {
