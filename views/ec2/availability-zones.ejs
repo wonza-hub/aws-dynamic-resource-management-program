@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/css/az.css" />
   </head>
   <body>
-    <h1>Availability Zones</h1>
+    <%- include('../base.ejs') %>
+
+    <h2>Availability Zones</h2>
 
     <div class="card-container">
       <% availabilityZones.forEach(zone => { %>

@@ -7,8 +7,10 @@
     <!-- <link rel="stylesheet" href="/css/ec2.css" /> -->
   </head>
   <body>
+    <%- include('../base.ejs') %>
+
     <div class="container">
-      <h1>인스턴스 생성</h1>
+      <h2>인스턴스 생성</h2>
       <form action="/ec2/instances" method="POST">
         <!-- imageId -->
         <div class="form-group">
