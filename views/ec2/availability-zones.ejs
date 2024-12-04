@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Availability Zones</title>
+    <link rel="stylesheet" href="/css/az.css" />
+  </head>
+  <body>
+    <h1>Availability Zones</h1>
+
+    <div class="card-container">
+      <% availabilityZones.forEach(zone => { %>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><%= zone.ZoneName %></h3>
+          <span
+            class="status-badge <%= zone.State === 'available' ? 'status-available' : 'status-unavailable' %>"
+          >
+            <%= zone.State %>
+          </span>
+        </div>
+        <div class="card-body">
+          <p><strong>Region:</strong> <%= zone.RegionName %></p>
+          <p><strong>Group Name:</strong> <%= zone.GroupName %></p>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </body>
+</html>
