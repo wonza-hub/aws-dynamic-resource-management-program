@@ -9,6 +9,22 @@
   <body>
     <%- include('../base.ejs') %>
     <h2>인스턴스 목록</h2>
+    <!-- HTCondor 클러스터 상태 조회 -->
+    <div class="htcondor-container">
+      <div class="form-group">
+        <label for="instanceIp">HTCondor 클러스터 상태 조회</label>
+        <input
+          type="text"
+          id="instanceIp"
+          name="instanceIp"
+          placeholder="컨트롤 노드의 공인 IP 입력"
+        />
+        <!-- 상태 조회 버튼 -->
+      </div>
+      <button class="cluster-btn" type="button" onclick="viewClusterStatus()">
+        조회
+      </button>
+    </div>
     <form class="instance-actions-form" id="instance-actions-form">
       <div>
         <label for="action">인스턴스 상태</label>
@@ -143,6 +159,19 @@
             );
           }
         });
+
+      function viewClusterStatus() {
+        const ip = document.getElementById("instanceIp").value;
+        if (ip) {
+          // URL에 IP를 포함하여 새 탭에서 클러스터 상태를 열기
+          const url = `/ec2/htcondor/status?instanceIp=${encodeURIComponent(
+            ip
+          )}`;
+          window.open(url, "_blank");
+        } else {
+          alert("클러스트 컨트롤 노드의 공인 IP를 입력하세요.");
+        }
+      }
     </script>
   </body>
 </html>
