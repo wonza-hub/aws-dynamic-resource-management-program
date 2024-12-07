@@ -1,11 +1,19 @@
 import "dotenv/config";
 import { EC2Client } from "@aws-sdk/client-ec2";
-import { ec2ClientConfig } from "../config/ec2-client-config.js";
+import { AutoScalingClient } from "@aws-sdk/client-auto-scaling";
+import {
+  autoScalingClientConfig,
+  ec2ClientConfig,
+} from "../config/ec2-config.js";
 
 /**
- * EC2Client 생성
+ * EC2 Client 생성
  * @returns EC2Client
  */
-const ec2Client = new EC2Client(ec2ClientConfig);
+export const ec2Client = new EC2Client(ec2ClientConfig);
 
-export default ec2Client;
+/**
+ * Auto Scaling Client 생성
+ * @returns AutoScalingClient
+ */
+export const autoScalingClient = new AutoScalingClient(autoScalingClientConfig);
