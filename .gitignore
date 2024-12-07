@@ -3,6 +3,8 @@
 
 private-key.pem
 
+uploads/
+
 ### Node ###
 # Logs
 logs
