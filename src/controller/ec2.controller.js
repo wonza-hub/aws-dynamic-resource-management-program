@@ -297,3 +297,36 @@ export const createCondorJob = async (req, res) => {
     await ec2Service.submitCondorJob(controlNodeIp, args, scriptFile, res);
   } catch (error) {}
 };
+
+// GET /htcondor/queue-status
+export const getCondorQueueStatus = async (req, res) => {
+  try {
+    const { instanceIp } = req.query;
+
+    // EC2 서비스에서 condor_q 데이터 가져오기
+    const data = await ec2Service.getCondorQueueStatus(instanceIp);
+
+    // condor_q의 결과를 라인 단위로 나누기
+    const queueStatusLines = data
+      .split("\n")
+      .filter((line) => line.trim() !== "");
+
+    // 헤더와 작업 상태 정보 분리
+    const queue = queueStatusLines.slice(1, -3);
+    const totalStatus = queueStatusLines.slice(-3);
+
+    res.render("ec2/htcondor-queue", {
+      queue,
+      totalStatus,
+      errorMessage: null,
+    });
+  } catch (error) {
+    console.error("Error fetching HTCondor queue status:", error);
+    res.render("ec2/htcondor-queue", {
+      queue: [],
+      totalStatus: [],
+      errorMessage:
+        error.message || "HTCondor 상태를 가져오는 데 실패했습니다.",
+    });
+  }
+};
