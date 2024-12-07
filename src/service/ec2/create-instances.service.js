@@ -13,7 +13,7 @@ import {
   CreateTagsCommand,
 } from "@aws-sdk/client-ec2";
 import { v4 as uuidv4 } from "uuid";
-import ec2Client from "../aws-client.js";
+import { ec2Client } from "../aws-client.js";
 
 const createInstances = async ({
   imageId,

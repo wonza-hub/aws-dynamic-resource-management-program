@@ -10,7 +10,7 @@ import {
   StartInstancesCommand,
   StopInstancesCommand,
 } from "@aws-sdk/client-ec2";
-import ec2Client from "../aws-client.js";
+import { ec2Client } from "../aws-client.js";
 
 const controlInstances = async (action, instanceIds) => {
   const input = { InstanceIds: instanceIds };

@@ -4,7 +4,7 @@
  * @returns {Object} - 요청 ID와 상태 메시지
  */
 import { RebootInstancesCommand } from "@aws-sdk/client-ec2";
-import ec2Client from "../aws-client.js";
+import { ec2Client } from "../aws-client.js";
 
 const rebootInstances = async (instanceIds) => {
   const input = {

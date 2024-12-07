@@ -3,7 +3,7 @@
  * @returns {Array} instances - 배열 형태의 인스턴스 정보
  */
 import { DescribeInstancesCommand } from "@aws-sdk/client-ec2";
-import ec2Client from "../aws-client.js";
+import { ec2Client } from "../aws-client.js";
 
 const listInstances = async () => {
   const command = new DescribeInstancesCommand({});

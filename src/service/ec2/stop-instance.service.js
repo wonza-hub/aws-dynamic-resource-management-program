@@ -4,7 +4,7 @@
  * @returns {Object} - 중지된 인스턴스 상태 정보
  */
 import { StopInstancesCommand } from "@aws-sdk/client-ec2";
-import ec2Client from "../aws-client.js";
+import { ec2Client } from "../aws-client.js";
 
 const stopInstances = async (instanceIds) => {
   const input = {

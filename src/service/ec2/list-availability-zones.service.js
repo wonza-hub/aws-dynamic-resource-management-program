@@ -3,7 +3,7 @@
  * @returns {Array} 가용 영역 정보를 담은 배열
  */
 import { DescribeAvailabilityZonesCommand } from "@aws-sdk/client-ec2";
-import ec2Client from "../aws-client.js";
+import { ec2Client } from "../aws-client.js";
 
 const listAvailabilityZones = async () => {
   const command = new DescribeAvailabilityZonesCommand();

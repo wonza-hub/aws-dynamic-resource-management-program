@@ -3,7 +3,7 @@
  * @returns {Array} 이미지 정보를 담은 배열
  */
 import { DescribeImagesCommand } from "@aws-sdk/client-ec2";
-import ec2Client from "../aws-client.js";
+import { ec2Client } from "../aws-client.js";
 
 const listImages = async () => {
   const command = new DescribeImagesCommand({ Owners: ["self"] });
