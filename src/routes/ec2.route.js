@@ -12,7 +12,12 @@ import {
   getCondorStatus,
   renderInstancesCreation,
   handleInstanceAction,
+  createAutoScalingGroup,
+  createCondorJob,
+  getCondorQueueStatus,
+  renderCondorJobForm,
 } from "../controller/ec2.controller.js";
+import multer from "multer";
 
 const router = Router();
 router.get("/instances", listInstances);
@@ -20,15 +25,23 @@ router.get("/images", listImages);
 router.get("/availability-regions", listAvailabilityRegions);
 router.get("/availability-zones", listAvailabilityZones);
 router.get("/htcondor/status", getCondorStatus);
-
-// 렌더링
 router.get("/instances/create", renderInstancesCreation);
-
-router.put("/instances/action", handleInstanceAction);
+router.get("/htcondor/job-form", renderCondorJobForm);
+router.get("/htcondor/queue-status", getCondorQueueStatus);
 
 router.post("/instances", createInstances);
-router.put("/instances/start", startInstances);
-router.put("/instances/reboot", rebootInstances);
-router.put("/instances/stop", stopInstances);
+router.post("/asg", createAutoScalingGroup);
+
+const upload = multer({ dest: "uploads/" });
+router.post(
+  "/htcondor/submit-job",
+  upload.single("scriptFile"),
+  createCondorJob
+);
+
+router.put("/instances/action", handleInstanceAction);
+// router.put("/instances/start", startInstances);
+// router.put("/instances/reboot", rebootInstances);
+// router.put("/instances/stop", stopInstances);
 
 export default router;
