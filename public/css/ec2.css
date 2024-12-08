@@ -149,14 +149,12 @@ button:hover {
 .instance-actions-form label {
   font-size: 1em;
   font-weight: bold;
-  margin-right: 10px;
 }
 
 .instance-actions-form select {
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  margin-right: 20px;
 }
 
 .instance-actions-form button {
@@ -170,6 +168,10 @@ button:hover {
 
 .instance-actions-form button:hover {
   background-color: #0056b3;
+}
+
+.instance-actions-btn {
+  margin: 1rem;
 }
 
 /* 레이아웃을 위한 그리드 스타일 */
