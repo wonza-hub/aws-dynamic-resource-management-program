@@ -8,39 +8,44 @@
   </head>
   <body>
     <%- include('../base.ejs') %>
-    <h2>인스턴스 목록</h2>
-    <!-- HTCondor 클러스터 상태 조회 -->
-    <div class="htcondor-container">
-      <div class="form-group">
-        <label for="instanceIp">HTCondor 클러스터 상태 조회</label>
-        <input
-          type="text"
-          id="instanceIp"
-          name="instanceIp"
-          placeholder="컨트롤 노드의 공인 IP 입력"
-        />
-      </div>
-      <!-- 상태 조회 버튼 -->
-      <button class="cluster-btn" type="button" onclick="viewClusterStatus()">
-        조회
-      </button>
-    </div>
     <form class="instance-actions-form" id="instance-actions-form">
-      <div>
-        <label for="action">인스턴스 상태</label>
-        <select id="action" name="action">
-          <option value="start">시작</option>
-          <option value="stop">중지</option>
-          <option value="reboot">재부팅</option>
-        </select>
-        <button type="submit">상태 적용</button>
-        <button
-          class="instance-actions-btn"
-          type="button"
-          onclick="location.href='/ec2/instances/create'"
-        >
-          새 인스턴스 생성
-        </button>
+      <div class="control-pad">
+        <div>
+          <label for="action">인스턴스 (<%= instances.length %>)</label>
+          <select id="action" name="action">
+            <option value="start">시작</option>
+            <option value="stop">중지</option>
+            <option value="reboot">재부팅</option>
+          </select>
+          <button type="submit">상태 적용</button>
+          <button
+            class="instance-actions-btn"
+            type="button"
+            onclick="location.href='/ec2/instances/create'"
+          >
+            새 인스턴스 생성
+          </button>
+        </div>
+        <!-- HTCondor 클러스터 상태 조회 -->
+        <div class="htcondor-container">
+          <div class="form-group">
+            <label for="instanceIp">HTCondor 클러스터 상태 조회</label>
+            <input
+              type="text"
+              id="instanceIp"
+              name="instanceIp"
+              placeholder="컨트롤 노드의 공인 IP 입력"
+            />
+            <!-- 상태 조회 버튼 -->
+            <button
+              class="cluster-btn"
+              type="button"
+              onclick="viewClusterStatus()"
+            >
+              조회
+            </button>
+          </div>
+        </div>
       </div>
       <main class="card-container">
         <% instances.forEach(instance => { %>
