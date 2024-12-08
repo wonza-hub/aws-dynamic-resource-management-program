@@ -19,8 +19,8 @@
           name="instanceIp"
           placeholder="컨트롤 노드의 공인 IP 입력"
         />
-        <!-- 상태 조회 버튼 -->
       </div>
+      <!-- 상태 조회 버튼 -->
       <button class="cluster-btn" type="button" onclick="viewClusterStatus()">
         조회
       </button>
@@ -34,7 +34,11 @@
           <option value="reboot">재부팅</option>
         </select>
         <button type="submit">상태 적용</button>
-        <button type="button" onclick="location.href='/ec2/instances/create'">
+        <button
+          class="instance-actions-btn"
+          type="button"
+          onclick="location.href='/ec2/instances/create'"
+        >
           새 인스턴스 생성
         </button>
       </div>
@@ -164,7 +168,7 @@
         const ip = document.getElementById("instanceIp").value;
         if (ip) {
           // URL에 IP를 포함하여 새 탭에서 클러스터 상태를 열기
-          const url = `/ec2/htcondor/status?instanceIp=${encodeURIComponent(
+          const url = `/ec2/htcondor/dashboard?instanceIp=${encodeURIComponent(
             ip
           )}`;
           window.open(url, "_blank");
