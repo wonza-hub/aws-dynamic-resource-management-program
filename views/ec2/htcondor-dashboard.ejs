@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTCondor 대시보드 | EC2</title>
     <link rel="stylesheet" href="/css/htcondor-dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <div class="container">
@@ -17,8 +18,7 @@
       <% } else { %>
       <!-- 클러스터 노드 상태 -->
       <section class="section">
-        <h2>노드 구성 정보</h2>
-        <% if (clusterNodes.length > 0) { %>
+        <h2>구성 노드 정보 상태</h2>
         <table>
           <thead>
             <tr>
@@ -44,18 +44,14 @@
               <td><%= node.memory %></td>
               <td><%= node.activityTime %></td>
             </tr>
-            <% }) %>
+            <% }); %>
           </tbody>
         </table>
-        <% } else { %>
-        <p>No Cluster Nodes Available.</p>
-        <% } %>
       </section>
 
       <!-- 클러스터 요약 -->
       <section class="section">
-        <h2>클러스터 요약</h2>
-        <% if (clusterSummary.length > 0) { %>
+        <h2>노드 요약</h2>
         <table>
           <thead>
             <tr>
@@ -81,33 +77,73 @@
               <td><%= summary.preempting %></td>
               <td><%= summary.draining %></td>
             </tr>
-            <% }) %>
+            <% }); %>
           </tbody>
         </table>
-        <% } else { %>
-        <p>No Cluster Summary Available.</p>
-        <% } %>
       </section>
 
       <!-- 작업 큐 상태 -->
       <section class="section">
         <h2>작업 큐 상태</h2>
-        <% if (queue.length > 0) { %>
-        <pre class="queue-status"><%= queue.join("\n") %></pre>
-        <% } else { %>
-        <p>No Queue Jobs Found.</p>
-        <% } %>
+        <pre><%= queue.join("\n") %></pre>
       </section>
 
       <!-- 총 작업 상태 -->
       <section class="section">
-        <h2>총 작업 상태</h2>
-        <% if (totalStatus.length > 0) { %>
-        <pre class="total-status"><%= totalStatus.join("\n") %></pre>
-        <% } else { %>
-        <p>No Total Status Available.</p>
-        <% } %>
+        <h2>모든 작업 상태</h2>
+        <pre><%= totalStatus.join("\n") %></pre>
       </section>
+
+      <!-- CPU 메트릭 차트 -->
+      <section class="section">
+        <h2>CPU 메트릭</h2>
+        <canvas id="cpuMetricsChart"></canvas>
+      </section>
+
+      <script>
+        // 클라이언트에 안전하게 데이터 전달
+        var labels = <%- JSON.stringify(metrics[0]?.Timestamps.reverse().map(ts => new Date(ts).toLocaleTimeString()) || []); %>;
+        var datasets = <%- JSON.stringify(metrics.reverse().map(metric => ({
+          label: metric.Label,
+          data: metric.Values,
+          backgroundColor: "rgba(75,192,192,0.2)",
+          borderColor: "rgba(75,192,192,1)",
+          borderWidth: 2,
+          hoverBackgroundColor: "rgba(75,192,192,0.4)",
+          hoverBorderColor: "rgba(75,192,192,1)",
+          fill: false,
+          tension: 0.1
+        }))); %>;
+
+        // 차트 구성 및 생성
+        var canvas = document.getElementById('cpuMetricsChart');
+        var config = {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: datasets
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top"
+              }
+            },
+            scales: {
+              y: {
+                title: {
+                  display: true,
+                  text: "CPU 사용률 (%)"
+                },
+                beginAtZero: true
+              }
+            }
+          }
+        };
+        var cpuMetricsChart = new Chart(canvas, config);
+      </script>
       <% } %>
     </div>
   </body>
