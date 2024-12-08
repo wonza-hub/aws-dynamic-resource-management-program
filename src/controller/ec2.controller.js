@@ -342,6 +342,7 @@ export const getCondorDashboard = async (req, res) => {
       clusterSummary: [],
       queue: [],
       totalStatus: [],
+      metrics: [],
       errorMessage: null,
     };
 
@@ -403,6 +404,16 @@ export const getCondorDashboard = async (req, res) => {
       console.error("condor_q 데이터 가져오기 오류:", error.message);
       dashboardData.errorMessage =
         "큐 상태를 가져오는 데 실패했습니다. " + error.message;
+    }
+
+    // cloudwatch metrics
+    try {
+      const condorMetrics = await ec2Service.getHTCondorMetrics();
+      dashboardData.metrics = condorMetrics;
+    } catch (error) {
+      console.log("🚀 ~ getCondorDashboard ~ error:", error);
+      dashboardData.errorMessage =
+        "메트릭 정보를 가져오는 데 실패했습니다. " + error.message;
     }
 
     res.render("ec2/htcondor-dashboard", dashboardData);
