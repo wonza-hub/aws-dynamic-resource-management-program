@@ -330,3 +330,91 @@ export const getCondorQueueStatus = async (req, res) => {
     });
   }
 };
+
+// GET /htcondor/dashboard
+export const getCondorDashboard = async (req, res) => {
+  try {
+    const { instanceIp } = req.query;
+
+    // 받아올 데이터
+    const dashboardData = {
+      clusterNodes: [],
+      clusterSummary: [],
+      queue: [],
+      totalStatus: [],
+      errorMessage: null,
+    };
+
+    // condor_status
+    try {
+      const condorStatusData = await ec2Service.getCondorStatus(instanceIp);
+      const statusLines = condorStatusData
+        .split("\n")
+        .filter((line) => line.trim() !== "");
+      const separatorIndex = statusLines.findIndex((line) =>
+        line.includes("Machines")
+      );
+      const nodeData = statusLines.slice(1, separatorIndex);
+      const summaryData = statusLines.slice(separatorIndex + 1);
+
+      dashboardData.clusterNodes = nodeData.map((line) => {
+        const columns = line.trim().split(/\s+/);
+        return {
+          name: columns[0],
+          os: columns[1],
+          architecture: columns[2],
+          state: columns[3],
+          activity: columns[4],
+          loadAverage: columns[5],
+          memory: columns[6],
+          activityTime: columns[7],
+        };
+      });
+
+      dashboardData.clusterSummary = summaryData.map((line) => {
+        const columns = line.trim().split(/\s+/);
+        return {
+          architecture: columns[0],
+          total: columns[1],
+          owner: columns[2],
+          claimed: columns[3],
+          unclaimed: columns[4],
+          matched: columns[5],
+          preempting: columns[6],
+          draining: columns[7],
+        };
+      });
+    } catch (error) {
+      console.error("condor_status 데이터 가져오기 오류:", error.message);
+      dashboardData.errorMessage =
+        "클러스터 상태를 가져오는 데 실패했습니다. " + error.message;
+    }
+
+    // condor_q
+    try {
+      const condorQueueData = await ec2Service.getCondorQueueStatus(instanceIp);
+      const queueStatusLines = condorQueueData
+        .split("\n")
+        .filter((line) => line.trim() !== "");
+
+      dashboardData.queue = queueStatusLines.slice(1, -3);
+      dashboardData.totalStatus = queueStatusLines.slice(-3);
+    } catch (error) {
+      console.error("condor_q 데이터 가져오기 오류:", error.message);
+      dashboardData.errorMessage =
+        "큐 상태를 가져오는 데 실패했습니다. " + error.message;
+    }
+
+    res.render("ec2/htcondor-dashboard", dashboardData);
+  } catch (error) {
+    console.error("HTCondor 대시보드 렌더링 오류:", error);
+    res.render("ec2/htcondor-dashboard", {
+      clusterNodes: [],
+      clusterSummary: [],
+      queue: [],
+      totalStatus: [],
+      errorMessage:
+        error.message || "대시보드를 불러오는 중 오류가 발생했습니다.",
+    });
+  }
+};
