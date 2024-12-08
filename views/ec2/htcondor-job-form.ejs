@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTCondor 작업 제출</title>
+    <link rel="stylesheet" href="/css/htcondor-job-form.css" />
   </head>
   <body>
-    <h1>HTCondor 작업 제출</h1>
     <form
       action="/ec2/htcondor/submit-job"
       method="POST"
       enctype="multipart/form-data"
     >
+      <h1>HTCondor 작업 제출</h1>
       <label for="masterIp">마스터 노드 IP:</label>
       <input type="text" id="masterIp" name="masterIp" required /><br /><br />
 
