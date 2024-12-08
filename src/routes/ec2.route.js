@@ -10,7 +10,6 @@ import {
   handleInstanceAction,
   createAutoScalingGroup,
   createCondorJob,
-  getCondorQueueStatus,
   renderCondorJobForm,
   getCondorDashboard,
 } from "../controller/ec2.controller.js";
@@ -23,7 +22,6 @@ router.get("/availability-regions", listAvailabilityRegions);
 router.get("/availability-zones", listAvailabilityZones);
 router.get("/instances/create", renderInstancesCreation);
 router.get("/htcondor/job-form", renderCondorJobForm);
-router.get("/htcondor/queue-status", getCondorQueueStatus);
 router.get("/htcondor/dashboard", getCondorDashboard);
 
 router.post("/instances", createInstances);
