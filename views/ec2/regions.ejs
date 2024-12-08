@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>가용 리전 | EC2</title>
+    <link rel="stylesheet" href="/css/region.css" />
+  </head>
+  <body>
+    <%- include('../base.ejs') %>
+
+    <h2>가용 리전</h2>
+
+    <div class="card-container">
+      <% regions.forEach(region => { %>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><%= region.RegionName %></h3>
+        </div>
+        <span
+          class="status-badge <%= region.OptInStatus === 'not-opted-in' ? 'status-unavailable' : 'status-available' %>"
+        >
+          <%= region.OptInStatus %>
+        </span>
+        <div class="card-body">
+          <p><strong>엔드포인트:</strong></p>
+          <%= region.Endpoint %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </body>
+</html>

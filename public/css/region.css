@@ -24,6 +24,9 @@ h2 {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .card:hover {
@@ -34,6 +37,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 0.2rem;
 }
 
 .card-title {
@@ -43,6 +47,7 @@ h2 {
 }
 
 .status-badge {
+  width: fit-content;
   padding: 5px 10px;
   border-radius: 20px;
   color: white;
