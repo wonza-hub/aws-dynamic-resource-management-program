@@ -1,0 +1,100 @@
+/* 전체 레이아웃 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f8fa;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 헤더 스타일 */
+header h1 {
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+}
+
+/* 섹션 스타일 */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+/* 테이블 스타일 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th,
+td {
+  padding: 10px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+td {
+  color: #333;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* 프리 텍스트 스타일 */
+pre.queue-status,
+pre.total-status {
+  background-color: #f4f4f4;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+/* 에러 메시지 */
+.error-message {
+  color: #d9534f;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  th,
+  td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  pre.queue-status,
+  pre.total-status {
+    font-size: 14px;
+  }
+}
