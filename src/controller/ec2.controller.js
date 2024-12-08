@@ -279,11 +279,6 @@ export const createAutoScalingGroup = async (req, res) => {
   }
 };
 
-// get /htcondor/job-form
-export const renderCondorJobForm = async (req, res) => {
-  res.render("ec2/htcondor-job-form");
-};
-
 // post /htcondor/submit-job
 export const createCondorJob = async (req, res) => {
   const { controlNodeIp, args = "" } = req.body;
@@ -293,9 +288,27 @@ export const createCondorJob = async (req, res) => {
       .status(400)
       .json({ message: "스크립트 파일이 업로드되지 않았습니다." });
   }
+
   try {
-    await ec2Service.submitCondorJob(controlNodeIp, args, scriptFile, res);
-  } catch (error) {}
+    const jobId = await ec2Service.submitCondorJob(
+      controlNodeIp,
+      args,
+      scriptFile,
+      res
+    );
+
+    return res.status(201).json({
+      status: "success",
+      message: "Job submitted successfully.",
+      data: jobId,
+    });
+  } catch (error) {
+    console.error("🚀 ~ createCondorJob ~ error:", error);
+    return res.status(500).json({
+      status: "error",
+      message: error.message || "Failed to submit job.",
+    });
+  }
 };
 
 // GET /htcondor/queue-status
