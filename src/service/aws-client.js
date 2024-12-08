@@ -1,8 +1,10 @@
 import "dotenv/config";
 import { EC2Client } from "@aws-sdk/client-ec2";
 import { AutoScalingClient } from "@aws-sdk/client-auto-scaling";
+import { CloudWatchClient } from "@aws-sdk/client-cloudwatch";
 import {
   autoScalingClientConfig,
+  cloudWatchClientConfig,
   ec2ClientConfig,
 } from "../config/ec2-config.js";
 
@@ -17,3 +19,9 @@ export const ec2Client = new EC2Client(ec2ClientConfig);
  * @returns AutoScalingClient
  */
 export const autoScalingClient = new AutoScalingClient(autoScalingClientConfig);
+
+/**
+ * CloudWatch Client 생성
+ * @returns CloudWatchClient
+ */
+export const cloudWatchClient = new CloudWatchClient(cloudWatchClientConfig);

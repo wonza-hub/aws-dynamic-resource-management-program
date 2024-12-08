@@ -13,3 +13,8 @@ export const ec2ClientConfig = {
 export const autoScalingClientConfig = {
   region: process.env.AWS_REGION,
 };
+
+// CONFIG: Cloud Watch 클라이언트 객체
+export const cloudWatchClientConfig = {
+  region: process.env.AWS_REGION,
+};
