@@ -3,13 +3,9 @@ import { Router } from "express";
 import {
   createInstances,
   listInstances,
-  startInstances,
-  rebootInstances,
-  stopInstances,
   listImages,
   listAvailabilityRegions,
   listAvailabilityZones,
-  getCondorStatus,
   renderInstancesCreation,
   handleInstanceAction,
   createAutoScalingGroup,
@@ -25,7 +21,6 @@ router.get("/instances", listInstances);
 router.get("/images", listImages);
 router.get("/availability-regions", listAvailabilityRegions);
 router.get("/availability-zones", listAvailabilityZones);
-router.get("/htcondor/status", getCondorStatus);
 router.get("/instances/create", renderInstancesCreation);
 router.get("/htcondor/job-form", renderCondorJobForm);
 router.get("/htcondor/queue-status", getCondorQueueStatus);
@@ -42,8 +37,5 @@ router.post(
 );
 
 router.put("/instances/action", handleInstanceAction);
-// router.put("/instances/start", startInstances);
-// router.put("/instances/reboot", rebootInstances);
-// router.put("/instances/stop", stopInstances);
 
 export default router;
