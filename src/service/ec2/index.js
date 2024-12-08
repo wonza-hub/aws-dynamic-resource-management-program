@@ -4,13 +4,11 @@ import createASG from "./create-asg.service.js";
 import createInstances from "./create-instances.service.js";
 import getCondorQueueStatus from "./get-condor-queue-status.service.js";
 import getCondorStatus from "./get-condor-status.service.js";
+import getHTCondorMetrics from "./get-htcondor-metrics.service.js";
 import listAvailabilityRegions from "./list-availability-regions.service.js";
 import listAvailabilityZones from "./list-availability-zones.service.js";
 import listImages from "./list-images.service.js";
 import listInstances from "./list-instances.service.js";
-import rebootInstances from "./reboot-instances.service.js";
-import startInstances from "./start-instances.service.js";
-import stopInstances from "./stop-instance.service.js";
 import submitCondorJob from "./submit-condor-job.service.js";
 
 const ec2Service = {
@@ -19,15 +17,13 @@ const ec2Service = {
   listAvailabilityZones,
   listImages,
   listInstances,
-  rebootInstances,
-  startInstances,
-  stopInstances,
   getCondorStatus,
   controlInstances,
   createASG,
   getCondorQueueStatus,
   submitCondorJob,
   getCondorQueueStatus,
+  getHTCondorMetrics,
 };
 
 export default ec2Service;
