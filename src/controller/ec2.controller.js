@@ -84,9 +84,9 @@ export const listImages = async (req, res) => {
 // GET /availability-regions
 export const listAvailabilityRegions = async (req, res) => {
   try {
-    const availabilityRegions = await ec2Service.listAvailabilityRegions();
+    const regions = await ec2Service.listRegions();
 
-    return res.render("ec2/availability-regions", { availabilityRegions });
+    return res.render("ec2/regions", { regions });
   } catch (error) {
     return res.status(500).json({
       status: "error",
