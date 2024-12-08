@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTCondor 대시보드 | EC2</title>
+    <link rel="stylesheet" href="/css/htcondor-dashboard.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>HTCondor 대시보드</h1>
+      </header>
+
+      <% if (errorMessage) { %>
+      <div class="error-message"><%= errorMessage %></div>
+      <% } else { %>
+      <!-- 클러스터 노드 상태 -->
+      <section class="section">
+        <h2>노드 구성 정보</h2>
+        <% if (clusterNodes.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Node Name</th>
+              <th>OS</th>
+              <th>Architecture</th>
+              <th>Status</th>
+              <th>Activity</th>
+              <th>Load Average</th>
+              <th>Memory</th>
+              <th>Activity Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% clusterNodes.forEach((node) => { %>
+            <tr>
+              <td><%= node.name %></td>
+              <td><%= node.os %></td>
+              <td><%= node.architecture %></td>
+              <td><%= node.state %></td>
+              <td><%= node.activity %></td>
+              <td><%= node.loadAverage %></td>
+              <td><%= node.memory %></td>
+              <td><%= node.activityTime %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <p>No Cluster Nodes Available.</p>
+        <% } %>
+      </section>
+
+      <!-- 클러스터 요약 -->
+      <section class="section">
+        <h2>클러스터 요약</h2>
+        <% if (clusterSummary.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Architecture</th>
+              <th>Total</th>
+              <th>Owner</th>
+              <th>Claimed</th>
+              <th>Unclaimed</th>
+              <th>Matched</th>
+              <th>Preempting</th>
+              <th>Draining</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% clusterSummary.forEach((summary) => { %>
+            <tr>
+              <td><%= summary.architecture %></td>
+              <td><%= summary.total %></td>
+              <td><%= summary.owner %></td>
+              <td><%= summary.claimed %></td>
+              <td><%= summary.unclaimed %></td>
+              <td><%= summary.matched %></td>
+              <td><%= summary.preempting %></td>
+              <td><%= summary.draining %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <p>No Cluster Summary Available.</p>
+        <% } %>
+      </section>
+
+      <!-- 작업 큐 상태 -->
+      <section class="section">
+        <h2>작업 큐 상태</h2>
+        <% if (queue.length > 0) { %>
+        <pre class="queue-status"><%= queue.join("\n") %></pre>
+        <% } else { %>
+        <p>No Queue Jobs Found.</p>
+        <% } %>
+      </section>
+
+      <!-- 총 작업 상태 -->
+      <section class="section">
+        <h2>총 작업 상태</h2>
+        <% if (totalStatus.length > 0) { %>
+        <pre class="total-status"><%= totalStatus.join("\n") %></pre>
+        <% } else { %>
+        <p>No Total Status Available.</p>
+        <% } %>
+      </section>
+      <% } %>
+    </div>
+  </body>
+</html>
