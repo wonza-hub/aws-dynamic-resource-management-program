@@ -16,6 +16,7 @@ import {
   createCondorJob,
   getCondorQueueStatus,
   renderCondorJobForm,
+  getCondorDashboard,
 } from "../controller/ec2.controller.js";
 import multer from "multer";
 
@@ -28,6 +29,7 @@ router.get("/htcondor/status", getCondorStatus);
 router.get("/instances/create", renderInstancesCreation);
 router.get("/htcondor/job-form", renderCondorJobForm);
 router.get("/htcondor/queue-status", getCondorQueueStatus);
+router.get("/htcondor/dashboard", getCondorDashboard);
 
 router.post("/instances", createInstances);
 router.post("/asg", createAutoScalingGroup);
