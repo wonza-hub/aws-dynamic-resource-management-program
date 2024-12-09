@@ -1,3 +1,7 @@
+/**
+ * SERVICE: ASG의 자동 조정 정책을 생성하는 함수
+ * @returns {Promise<String>} - 정책 ARN
+ */
 import { PutScalingPolicyCommand } from "@aws-sdk/client-auto-scaling";
 import { autoScalingClient } from "../aws-client.js";
 
@@ -10,14 +14,14 @@ const createAsgScalingPolicy = async ({
   const command = new PutScalingPolicyCommand({
     AutoScalingGroupName: asgName,
     PolicyName: policyName,
-    AdjustmentType: adjustmentType, // "ChangeInCapacity"
-    ScalingAdjustment: scalingAdjustment, // Number of instances to add
-    Cooldown: 300, // Cooldown period in seconds
+    AdjustmentType: adjustmentType,
+    ScalingAdjustment: scalingAdjustment,
+    Cooldown: 60,
   });
 
-  const response = await autoScalingClient.send(command);
+  const { PolicyARN } = await autoScalingClient.send(command);
 
-  return response.PolicyARN; // Return the policy ARN to link with CloudWatch alarm
+  return PolicyARN;
 };
 
 export default createAsgScalingPolicy;
