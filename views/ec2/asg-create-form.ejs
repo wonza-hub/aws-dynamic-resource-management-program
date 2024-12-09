@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASG 생성</title>
+    <link rel="stylesheet" href="/css/asg-create.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Auto Scaling Group 생성</h1>
+      <form action="/ec2/asg" method="POST">
+        <!-- Auto Scaling Group Name -->
+        <div class="form-group">
+          <label for="autoScalingGroupName">ASG 이름</label>
+          <input
+            type="text"
+            id="autoScalingGroupName"
+            name="autoScalingGroupName"
+            placeholder="ASG 이름을 입력하세요"
+            required
+          />
+        </div>
+
+        <!-- Launch Template Name -->
+        <div class="form-group">
+          <label for="launchTemplateName">시작 템플릿 이름</label>
+          <input
+            type="text"
+            id="launchTemplateName"
+            name="launchTemplateName"
+            placeholder="시작 템플릿 이름을 입력하세요"
+            required
+          />
+        </div>
+
+        <!-- Min Size -->
+        <div class="form-group">
+          <label for="minSize">최소 인스턴스 수</label>
+          <input
+            type="number"
+            id="minSize"
+            name="minSize"
+            placeholder="1"
+            value="1"
+            min="1"
+            required
+          />
+        </div>
+
+        <!-- Max Size -->
+        <div class="form-group">
+          <label for="maxSize">최대 인스턴스 수</label>
+          <input
+            type="number"
+            id="maxSize"
+            name="maxSize"
+            placeholder="2"
+            value="2"
+            min="1"
+            required
+          />
+        </div>
+
+        <!-- Desired Capacity -->
+        <div class="form-group">
+          <label for="desiredCapacity">희망 인스턴스 수</label>
+          <input
+            type="number"
+            id="desiredCapacity"
+            name="desiredCapacity"
+            placeholder="2"
+            value="2"
+            min="1"
+            required
+          />
+        </div>
+
+        <!-- VPC Zone Identifiers -->
+        <div class="form-group">
+          <label for="vpcZoneIdentifiers">VPC 서브넷 ID</label>
+          <input
+            type="text"
+            id="vpcZoneIdentifiers"
+            name="vpcZoneIdentifiers"
+            placeholder="서브넷 ID(쉼표로 구분)"
+            required
+          />
+        </div>
+
+        <!-- Availability Zones -->
+        <div class="form-group">
+          <label for="availabilityZones">가용 영역</label>
+          <input
+            type="text"
+            id="availabilityZones"
+            name="availabilityZones"
+            placeholder="가용 영역(쉼표로 구분)"
+            required
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button type="submit" class="submit-btn">ASG 생성</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
