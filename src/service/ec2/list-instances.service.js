@@ -26,8 +26,8 @@ const listInstances = async () => {
           StatusCheck: instance.StateReason?.Message || "Unknown",
           // AlarmStatus: "Unknown", // CloudWatch 경보 상태가 필요한 경우 구현 필요
           AvailabilityZone: instance.Placement?.AvailabilityZone || "N/A",
-          PublicIPv4DNS: instance.PublicDnsName || "N/A",
           PublicIPv4Address: instance.PublicIpAddress || "N/A",
+          PrivateIpAddress: instance.PrivateIpAddress,
           // ElasticIP: "N/A", // 탄력적 IP 정보 추가하려면 구현 필요
           IPv6Address:
             instance.NetworkInterfaces?.[0]?.Ipv6Addresses?.[0]?.Ipv6Address ||

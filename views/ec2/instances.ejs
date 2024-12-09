@@ -100,16 +100,16 @@
               <div class="card-item">
                 <div class="card-item-icon"></div>
                 <div class="card-item-info">
-                  <p class="label">Public DNS</p>
-                  <p><%= instance.PublicIPv4DNS || 'N/A' %></p>
+                  <p class="label">Public IP</p>
+                  <p><%= instance.PublicIPv4Address || 'N/A' %></p>
                 </div>
               </div>
 
               <div class="card-item">
                 <div class="card-item-icon"></div>
                 <div class="card-item-info">
-                  <p class="label">Public IP</p>
-                  <p><%= instance.PublicIPv4Address || 'N/A' %></p>
+                  <p class="label">Private IP</p>
+                  <p><%= instance.PrivateIpAddress || 'N/A' %></p>
                 </div>
               </div>
 
