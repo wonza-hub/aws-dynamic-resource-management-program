@@ -14,7 +14,7 @@ const getHTCondorMetrics = async () => {
     process.env.HTCondor_SG_ID
   );
   const endTime = new Date(); // 현재 시간
-  const startTime = new Date(endTime.getTime() - 900 * 1000); // 15분 전
+  const startTime = new Date(endTime.getTime() - 900 * 1000);
 
   const metricQueries = instanceIds.map((instanceId, index) => ({
     Id: `cpuUsage${index}`,
@@ -29,7 +29,7 @@ const getHTCondorMetrics = async () => {
           },
         ],
       },
-      Period: 300,
+      Period: 60,
       Stat: "Average",
     },
     ReturnData: true,
