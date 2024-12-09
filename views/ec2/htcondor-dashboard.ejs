@@ -185,11 +185,10 @@
       </div>
 
       <script>
-          // 클라이언트에 안전하게 데이터 전달
           let labels = <%- JSON.stringify(metrics[0]?.Timestamps.reverse().map(ts => new Date(ts).toLocaleTimeString()) || []); %>;
-          let datasets = <%- JSON.stringify(metrics.reverse().map(metric => ({
+          let datasets = <%- JSON.stringify(metrics.map(metric => ({
             label: metric.Label,
-            data: metric.Values,
+            data: metric.Values.reverse(),
             backgroundColor: "rgba(75,192,192,0.2)",
             borderColor: "rgba(75,192,192,1)",
             borderWidth: 2,
