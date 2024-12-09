@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto Scaling Groups | AWS</title>
+    <link rel="stylesheet" href="/css/asg.css" />
+  </head>
+  <body>
+    <%- include('../base.ejs') %>
+
+    <div class="container">
+      <header>
+        <h1>Auto Scaling Groups (ASG)</h1>
+        <div class="action-buttons">
+          <a href="/ec2/asg/create" class="btn btn-primary">ASG 생성</a>
+          <a href="/ec2/asg/scaling-policy/create" class="btn btn-secondary">
+            자동 조정 정책 생성
+          </a>
+        </div>
+      </header>
+
+      <% if (errorMessage) { %>
+      <div class="error-message"><%= errorMessage %></div>
+      <% } else { %>
+      <section>
+        <h2>ASG 목록</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>최소 크기</th>
+              <th>최대 크기</th>
+              <th>원하는 용량</th>
+              <th>시작 템플릿</th>
+              <th>인스턴스 ID</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% asgList.forEach((asg) => { %>
+            <tr>
+              <td><%= asg.name %></td>
+              <td><%= asg.minSize %></td>
+              <td><%= asg.maxSize %></td>
+              <td><%= asg.desiredCapacity %></td>
+              <td><%= asg.launchTemplate %></td>
+              <td>
+                <% asg.instances.forEach((instance) => { %>
+                <div><%= instance.id %> (<%= instance.lifecycleState %>)</div>
+                <% }); %>
+              </td>
+              <td>
+                <% asg.instances.forEach((instance) => { %>
+                <div><%= instance.lifecycleState %></div>
+                <% }); %>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </section>
+      <% } %>
+    </div>
+  </body>
+</html>
