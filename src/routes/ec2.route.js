@@ -15,6 +15,8 @@ import {
   renderAutoScalingGroupForm,
   createAsgScalingPolicy,
   renderAsgScalingPolicyForm,
+  renderCloudWatchAlarmForm,
+  createCloudWatchAlarm,
 } from "../controller/ec2.controller.js";
 import multer from "multer";
 
@@ -28,10 +30,12 @@ router.get("/htcondor/dashboard", getCondorDashboard);
 router.get("/asg", listAutoScalingGroup);
 router.get("/asg/create", renderAutoScalingGroupForm);
 router.get("/asg/scaling-policy/create", renderAsgScalingPolicyForm);
+router.get("/cloudwatch-alarm/create", renderCloudWatchAlarmForm);
 
 router.post("/instances", createInstances);
 router.post("/asg", createAutoScalingGroup);
 router.post("/asg/scaling-policy", createAsgScalingPolicy);
+router.post("/cloudwatch-alarm", createCloudWatchAlarm);
 
 const upload = multer({ dest: "uploads/" });
 router.post(

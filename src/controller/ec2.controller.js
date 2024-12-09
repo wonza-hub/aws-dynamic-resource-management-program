@@ -208,7 +208,42 @@ export const createAsgScalingPolicy = async (req, res) => {
   }
 };
 
-// post /htcondor/submit-job
+// GET /cloudwatch-alarm/create
+export const renderCloudWatchAlarmForm = async (req, res) => {
+  const { asgName } = req.query;
+  const policyArn = await ec2Service.getAsgScalingPolicyArn(asgName);
+  const snsTopics = await ec2Service.getSNSTopics();
+
+  res.render("cloud-watch/alarm-form", {
+    asgName,
+    policyArn,
+    snsTopics,
+  });
+};
+// POST /cloudwatch-alarm
+export const createCloudWatchAlarm = async (req, res) => {
+  try {
+    const { alarmName, threshold, policyArn, snsTopicArn } = req.body;
+
+    // 서비스 호출
+    await ec2Service.createHTCondorAlarm({
+      alarmName,
+      threshold: parseFloat(threshold),
+      policyArn,
+      snsTopicArn,
+    });
+
+    return res.redirect("/ec2/asg");
+  } catch (error) {
+    console.error("Error creating ASG:", error);
+    return res.status(500).json({
+      status: "error",
+      message: error.message || "Failed to create CloudWatch Alarm.",
+    });
+  }
+};
+
+// POST /htcondor/submit-job
 export const createCondorJob = async (req, res) => {
   const { controlNodeIp, args = "" } = req.body;
   const scriptFile = req.file;
