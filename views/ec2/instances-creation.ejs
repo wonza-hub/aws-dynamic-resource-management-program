@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/ec2-create.css" />
   </head>
   <body>
-    <%- include('../base.ejs') %>
+    <%- include("../base.ejs") %>
 
     <div class="container">
       <h2>인스턴스 생성</h2>
@@ -16,10 +16,9 @@
         <div class="form-group">
           <label for="imageId">AMI</label>
           <select id="imageId" name="imageId" required>
-            <!-- @@@환경변수로 분리@@@ -->
-            <option value="ami-015877ae41e23e71e">
-              사용자 지정 HTCondor Control 이미지 AMI
-            </option>
+            <% availableAMIs.forEach((ami) => { %>
+            <option value="<%= ami.imageId %>"><%= ami.name %></option>
+            <% }); %>
           </select>
         </div>
 
@@ -46,10 +45,9 @@
         <div class="form-group">
           <label for="keyName">키페어</label>
           <select id="keyName" name="keyName" required>
-            <!-- @@@환경변수로 분리@@@ -->
-            <option value="AWS-HTCondor-key_pair">
-              사용자 지정 HTCondor 키페어
-            </option>
+            <% keyPairs.forEach((key) => { %>
+            <option value="<%= key.keyName %>"><%= key.keyName %></option>
+            <% }); %>
           </select>
         </div>
 
@@ -57,11 +55,9 @@
         <div class="form-group">
           <label for="securityGroupIds">보안 그룹</label>
           <select id="securityGroupIds" name="securityGroupIds" required>
-            <option value="default">기본 보안 그룹</option>
-            <!-- @@@환경변수로 분리@@@ -->
-            <option value="sg-003cdf24e731ed907">
-              사용자 지정 HTCondor 클러스터 보안 그룹
-            </option>
+            <% securityGroups.forEach((sg) => { %>
+            <option value="<%= sg.groupId %>"><%= sg.groupName %></option>
+            <% }); %>
           </select>
         </div>
 

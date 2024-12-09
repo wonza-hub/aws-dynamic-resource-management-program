@@ -26,7 +26,20 @@ export const createInstances = async (req, res) => {
 
 // GET /instances/create
 export const renderInstancesCreation = async (req, res) => {
-  return res.render("ec2/instances-creation");
+  try {
+    const availableAMIs = await ec2Service.listAvailableAMIs();
+    const keyPairs = await ec2Service.listKeyPairs();
+    const securityGroups = await ec2Service.listSecurityGroups();
+
+    return res.render("ec2/instances-creation", {
+      availableAMIs,
+      keyPairs,
+      securityGroups,
+    });
+  } catch (error) {
+    console.error("Error fetching instance creation data:", error);
+    return res.status(500).send("Failed to load instance creation page.");
+  }
 };
 
 // PUT /instances/action

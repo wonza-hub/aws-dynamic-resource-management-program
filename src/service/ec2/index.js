@@ -7,8 +7,11 @@ import getCondorStatus from "./get-condor-status.service.js";
 import getHTCondorMetrics from "./get-htcondor-metrics.service.js";
 import listRegions from "./list-availability-regions.service.js";
 import listAvailabilityZones from "./list-availability-zones.service.js";
+import { listAvailableAMIs } from "./list-available-amis.service.js";
 import listImages from "./list-images.service.js";
 import listInstances from "./list-instances.service.js";
+import { listKeyPairs } from "./list-key-pairs.service.js";
+import { listSecurityGroups } from "./list-security-groups.service.js";
 import submitCondorJob from "./submit-condor-job.service.js";
 
 const ec2Service = {
@@ -16,7 +19,10 @@ const ec2Service = {
   listRegions,
   listAvailabilityZones,
   listImages,
+  listAvailableAMIs,
   listInstances,
+  listKeyPairs,
+  listSecurityGroups,
   getCondorStatus,
   controlInstances,
   createASG,
