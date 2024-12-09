@@ -23,21 +23,20 @@
           </span>
         </div>
         <div class="card-body">
-          <p><strong>Image ID:</strong> <%= image.ImageId %></p>
-          <p><strong>Architecture:</strong> <%= image.Architecture %></p>
+          <p><strong>AMI ID:</strong> <%= image.ImageId %></p>
+          <p><strong>아키텍쳐:</strong> <%= image.Architecture %></p>
           <p>
-            <strong>Creation Date:</strong> <%= new
+            <strong>생성일자:</strong> <%= new
             Date(image.CreationDate).toLocaleString() %>
           </p>
-          <p><strong>Description:</strong> <%= image.Description %></p>
-          <p><strong>Root Device Type:</strong> <%= image.RootDeviceType %></p>
+          <p><strong>설명:</strong> <%= image.Description %></p>
           <p>
-            <strong>Virtualization Type:</strong> <%= image.VirtualizationType
-            %>
+            <strong>루트 디바이스 유형:</strong> <%= image.RootDeviceType %>
           </p>
-          <p><strong>Owner ID:</strong> <%= image.OwnerId %></p>
+          <p><strong>가상화 유형:</strong> <%= image.VirtualizationType %></p>
+          <p><strong>소유자 ID:</strong> <%= image.OwnerId %></p>
           <p>
-            <strong>Source Instance ID:</strong> <%= image.SourceInstanceId %>
+            <strong>소스 인스턴스 ID:</strong> <%= image.SourceInstanceId %>
           </p>
         </div>
       </div>
