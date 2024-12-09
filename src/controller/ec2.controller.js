@@ -181,8 +181,12 @@ export const createAutoScalingGroup = async (req, res) => {
   }
 };
 
+// GET /asg/scaling-policy/create
+export const renderAsgScalingPolicyForm = async (req, res) => {
+  res.render("ec2/asg-scaling-policy-form");
+};
 // POST /asg/scaling-policy
-export const createAsgAutoScalingPolicy = async (req, res) => {
+export const createAsgScalingPolicy = async (req, res) => {
   try {
     const { asgName, policyName, adjustmentType, scalingAdjustment } = req.body;
 
@@ -194,11 +198,7 @@ export const createAsgAutoScalingPolicy = async (req, res) => {
       scalingAdjustment,
     });
 
-    return res.status(201).json({
-      status: "success",
-      message: "ASG scaling policy created successfully.",
-      data: response,
-    });
+    return res.redirect("/ec2/asg");
   } catch (error) {
     console.error("Error creating ASG:", error);
     return res.status(500).json({

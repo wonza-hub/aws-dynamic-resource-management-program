@@ -13,6 +13,8 @@ import {
   getCondorDashboard,
   listAutoScalingGroup,
   renderAutoScalingGroupForm,
+  createAsgScalingPolicy,
+  renderAsgScalingPolicyForm,
 } from "../controller/ec2.controller.js";
 import multer from "multer";
 
@@ -25,9 +27,11 @@ router.get("/instances/create", renderInstancesCreation);
 router.get("/htcondor/dashboard", getCondorDashboard);
 router.get("/asg", listAutoScalingGroup);
 router.get("/asg/create", renderAutoScalingGroupForm);
+router.get("/asg/scaling-policy/create", renderAsgScalingPolicyForm);
 
 router.post("/instances", createInstances);
 router.post("/asg", createAutoScalingGroup);
+router.post("/asg/scaling-policy", createAsgScalingPolicy);
 
 const upload = multer({ dest: "uploads/" });
 router.post(
