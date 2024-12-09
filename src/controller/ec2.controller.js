@@ -142,22 +142,44 @@ export const createAutoScalingGroup = async (req, res) => {
         message: "launchTemplateName is required.",
       });
     }
-
     // 서비스 호출
-    const asgResponse = await ec2Service.createASG({
+    await ec2Service.createASG({
       autoScalingGroupName,
       launchTemplateName,
-      minSize,
-      maxSize,
-      desiredCapacity,
-      vpcZoneIdentifiers,
-      availabilityZones,
+      minSize: parseInt(minSize),
+      maxSize: parseInt(maxSize),
+      desiredCapacity: parseInt(desiredCapacity),
+      vpcZoneIdentifiers: vpcZoneIdentifiers.split(","),
+      availabilityZones: availabilityZones.split(","),
+    });
+
+    return res.redirect("/ec2/asg");
+  } catch (error) {
+    console.error("Error creating ASG:", error);
+    return res.status(500).json({
+      status: "error",
+      message: error.message || "Failed to create Auto Scaling Group.",
+    });
+  }
+};
+
+// POST /asg/scaling-policy
+export const createAsgAutoScalingPolicy = async (req, res) => {
+  try {
+    const { asgName, policyName, adjustmentType, scalingAdjustment } = req.body;
+
+    // 서비스 호출
+    const response = await ec2Service.createAsgAutoScalingPolicy({
+      asgName,
+      policyName,
+      adjustmentType,
+      scalingAdjustment,
     });
 
     return res.status(201).json({
       status: "success",
-      message: "Auto Scaling Group created successfully.",
-      data: asgResponse,
+      message: "ASG scaling policy created successfully.",
+      data: response,
     });
   } catch (error) {
     console.error("Error creating ASG:", error);
