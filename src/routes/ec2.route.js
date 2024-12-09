@@ -11,6 +11,7 @@ import {
   createAutoScalingGroup,
   createCondorJob,
   getCondorDashboard,
+  listAutoScalingGroup,
 } from "../controller/ec2.controller.js";
 import multer from "multer";
 
@@ -21,6 +22,7 @@ router.get("/availability-regions", listAvailabilityRegions);
 router.get("/availability-zones", listAvailabilityZones);
 router.get("/instances/create", renderInstancesCreation);
 router.get("/htcondor/dashboard", getCondorDashboard);
+router.get("/asg", listAutoScalingGroup);
 
 router.post("/instances", createInstances);
 router.post("/asg", createAutoScalingGroup);
