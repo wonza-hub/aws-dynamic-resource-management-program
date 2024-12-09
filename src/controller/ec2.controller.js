@@ -136,7 +136,10 @@ export const listAutoScalingGroup = async (req, res) => {
     });
   }
 };
-
+// GET /asg/create
+export const renderAutoScalingGroupForm = async (req, res) => {
+  res.render("ec2/asg-create-form");
+};
 // POST /asg
 export const createAutoScalingGroup = async (req, res) => {
   try {
