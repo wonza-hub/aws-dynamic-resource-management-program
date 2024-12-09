@@ -40,7 +40,11 @@
           <tbody>
             <% asgList.forEach((asg) => { %>
             <tr>
-              <td><%= asg.name %></td>
+              <td>
+                <a href="/ec2/cloudwatch-alarm/create?asgName=<%= asg.name %>">
+                  <%= asg.name %>
+                </a>
+              </td>
               <td><%= asg.minSize %></td>
               <td><%= asg.maxSize %></td>
               <td><%= asg.desiredCapacity %></td>
