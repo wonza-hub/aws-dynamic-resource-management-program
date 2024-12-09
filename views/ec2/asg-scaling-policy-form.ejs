@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASG 자동 조정 정책 생성</title>
+    <link rel="stylesheet" href="/css/asg-scaling-policy-form.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>ASG 자동 조정 정책 생성</h1>
+      <form
+        id="scalingPolicyForm"
+        action="/ec2/asg/scaling-policy"
+        method="POST"
+      >
+        <!-- ASG 이름 -->
+        <div class="form-group">
+          <label for="asgName">ASG 이름</label>
+          <input
+            type="text"
+            id="asgName"
+            name="asgName"
+            placeholder="ASG 이름을 입력하세요"
+            required
+          />
+        </div>
+
+        <!-- 정책 이름 -->
+        <div class="form-group">
+          <label for="policyName">정책 이름</label>
+          <input
+            type="text"
+            id="policyName"
+            name="policyName"
+            placeholder="정책 이름을 입력하세요"
+            required
+          />
+        </div>
+
+        <!-- 조정 타입 -->
+        <div class="form-group">
+          <label for="adjustmentType">조정 타입</label>
+          <select id="adjustmentType" name="adjustmentType" required>
+            <option value="ChangeInCapacity">Change In Capacity</option>
+            <option value="ExactCapacity">Exact Capacity</option>
+            <option value="PercentChangeInCapacity">
+              Percent Change In Capacity
+            </option>
+          </select>
+        </div>
+
+        <!-- 조정 값 -->
+        <div class="form-group">
+          <label for="scalingAdjustment">조정 값</label>
+          <input
+            type="number"
+            id="scalingAdjustment"
+            name="scalingAdjustment"
+            placeholder="1"
+            min="1"
+            max="10"
+            required
+          />
+        </div>
+
+        <!-- 제출 버튼 -->
+        <div class="form-group">
+          <button type="submit" class="btn-submit">정책 생성</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
