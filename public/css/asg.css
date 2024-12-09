@@ -1,0 +1,105 @@
+/* 기본 설정 */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.action-buttons a {
+  text-decoration: none;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.action-buttons .btn-primary {
+  background-color: #007bff;
+}
+
+.action-buttons .btn-secondary {
+  background-color: #6c757d;
+}
+
+.action-buttons a:hover {
+  opacity: 0.9;
+}
+
+/* 에러 메시지 스타일 */
+.error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 테이블 스타일 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table thead {
+  background-color: #007bff;
+  color: white;
+}
+
+table th,
+table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* 반응형 테이블 */
+@media (max-width: 768px) {
+  table th,
+  table td {
+    padding: 8px;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  .action-buttons a {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
