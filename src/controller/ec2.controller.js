@@ -122,6 +122,21 @@ export const listAvailabilityZones = async (req, res) => {
   }
 };
 
+// GET /asg
+export const listAutoScalingGroup = async (req, res) => {
+  try {
+    const asgList = await ec2Service.listASGs();
+
+    res.render("ec2/asg", { asgList, errorMessage: null });
+  } catch (error) {
+    console.error("ASG 조회 실패:", error);
+    res.render("ec2/asg", {
+      asgList: [],
+      errorMessage: "ASG 정보를 가져오는 데 실패했습니다.",
+    });
+  }
+};
+
 // POST /asg
 export const createAutoScalingGroup = async (req, res) => {
   try {
