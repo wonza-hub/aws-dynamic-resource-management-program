@@ -15,6 +15,9 @@ import submitCondorJob from "./submit-condor-job.service.js";
 import listASGs from "./list-asgs.service.js";
 import createASG from "./create-asg.service.js";
 import createAsgAutoScalingPolicy from "./create-asg-scaling-policy.service.js";
+import createHTCondorAlarm from "./create-htcondor-alarm.service.js";
+import getAsgScalingPolicyArn from "./get-asg-scaling-policies-arn.service.js";
+import getSNSTopics from "./get-sns-topics.service.js";
 
 const ec2Service = {
   createInstances,
@@ -34,6 +37,9 @@ const ec2Service = {
   getHTCondorMetrics,
   createAsgAutoScalingPolicy,
   listASGs,
+  createHTCondorAlarm,
+  getAsgScalingPolicyArn,
+  getSNSTopics,
 };
 
 export default ec2Service;
