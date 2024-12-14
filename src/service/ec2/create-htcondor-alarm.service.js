@@ -1,5 +1,5 @@
 /**
- * HTCondor의 CPU 과부하에 대한 알람(SNS 포함)을 생성
+ * HTCondor의 특정 ASG에 대한 CPU 과부하 경보(SNS 포함)를 생성
  */
 import { PutMetricAlarmCommand } from "@aws-sdk/client-cloudwatch";
 import { cloudWatchClient } from "../aws-client.js";
@@ -9,14 +9,21 @@ const createHTCondorAlarm = async ({
   threshold,
   policyArn,
   snsTopicArn,
+  asgName,
 }) => {
   const command = new PutMetricAlarmCommand({
     AlarmName: alarmName,
     MetricName: "CPUUtilization",
     Namespace: "AWS/EC2",
+    Dimensions: [
+      {
+        Name: "AutoScalingGroupName",
+        Value: asgName, // ASG의 이름
+      },
+    ],
     Statistic: "Average",
-    Period: 60,
-    EvaluationPeriods: 2,
+    Period: 300,
+    EvaluationPeriods: 1,
     Threshold: threshold,
     ComparisonOperator: "GreaterThanOrEqualToThreshold",
     AlarmActions: [policyArn, snsTopicArn],
@@ -26,6 +33,7 @@ const createHTCondorAlarm = async ({
     return await cloudWatchClient.send(command);
   } catch (error) {
     console.error("🚀 ~ error:", error);
+    throw error;
   }
 };
 

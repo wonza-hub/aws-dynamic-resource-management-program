@@ -223,10 +223,11 @@ export const renderCloudWatchAlarmForm = async (req, res) => {
 // POST /cloudwatch-alarm
 export const createCloudWatchAlarm = async (req, res) => {
   try {
-    const { alarmName, threshold, policyArn, snsTopicArn } = req.body;
+    const { asgName, alarmName, threshold, policyArn, snsTopicArn } = req.body;
 
     // 서비스 호출
     await ec2Service.createHTCondorAlarm({
+      asgName,
       alarmName,
       threshold: parseFloat(threshold),
       policyArn,
