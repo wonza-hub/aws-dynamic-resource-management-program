@@ -32,7 +32,7 @@ const createASG = async ({
     VPCZoneIdentifier: vpcZoneIdentifiers.join(","),
     AvailabilityZones: availabilityZones,
     HealthCheckType: "EC2",
-    HealthCheckGracePeriod: 300,
+    HealthCheckGracePeriod: 30,
   });
 
   const response = await autoScalingClient.send(command);
